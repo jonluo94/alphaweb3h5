@@ -50,14 +50,14 @@ const showModal = ref(false)
 
 // 使用storeToRefs，保证store修改后，联想部分能够重新渲染
 const {promptList: promptTemplate} = storeToRefs<any>(promptStore)
-// 2023.4.10 添加上下文
+// 添加上下文
 let lastOptions: Chat.ConversationRequest = {}
 // 未知原因刷新页面，loading 状态不会重置，手动重置
 dataSources.value.forEach((item, index) => {
 	if (item.conversationOptions?.conversationId != null)
-		lastOptions = item.conversationOptions
-	if (item.loading)
-		updateChatSome(+uuid, index, {loading: false})
+		// lastOptions = item.conversationOptions
+		if (item.loading)
+			updateChatSome(+uuid, index, {loading: false})
 })
 
 // 发起对话
@@ -81,13 +81,22 @@ async function onConversation() {
 		},
 	)
 
-	// 2023.4.10 添加上下文
-	// let options: Chat.ConversationRequest = {}
-	let options: Chat.ConversationRequest = lastOptions
-	const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
+	// 上下文
+	let historys: string[] = []
+	if (usingContext.value) {
+		conversationList.value.forEach(function (item) {
+			historys.push(item.requestOptions.prompt)
+			historys.push(item.text)
+		});
+		console.log(historys);
+	}
 
-	if (lastContext && usingContext.value)
+	let options: Chat.ConversationRequest = lastOptions
+
+	const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
+	if (lastContext && usingContext.value) {
 		options = {...lastContext}
+	}
 
 	loading.value = true
 	prompt.value = ''
@@ -114,11 +123,10 @@ async function onConversation() {
 				model: modelType.value,
 				modelType: 0,
 				prompt: message,
-				contextCount: !usingContext.value ? 0 : null,
+				historys: historys,
 				// 传入signal 代表此请求可控
 				signal: ganNewController().signal,
 				onDownloadProgress: ({event}) => {
-					console.log("fetchChatAPIProcess")
 					const xhr = event.target
 
 					const {responseText} = xhr
@@ -128,9 +136,8 @@ async function onConversation() {
 					if (lastIndex !== -1) {
 						chunk = responseText.substring(lastIndex)
 					}
-					// try {
+
 					const data = JSON.parse(chunk)
-					console.log("data", data)
 					updateChat(
 						+uuid,
 						dataSources.value.length - 1,
@@ -144,7 +151,6 @@ async function onConversation() {
 							requestOptions: {prompt: message, options: {...options}},
 						},
 					)
-					// 2023.4.10 添加上下文
 					if (data.ConversationId != null && data.ConversationId.length !== 0)
 						lastOptions = {conversationId: data.ConversationId, parentMessageId: data.ChatRecordId}
 
@@ -156,8 +162,7 @@ async function onConversation() {
 					}
 
 					scrollToBottomIfAtBottom()
-					// } catch (error) {
-					// }
+
 				},
 			})
 			// 重置当前条目的loading状态
@@ -221,6 +226,16 @@ async function onRegenerate(index: number) {
 
 	let message = requestOptions?.prompt ?? ''
 
+	// 上下文
+	let historys: string[] = []
+	if (usingContext.value) {
+		conversationList.value.forEach(function (item) {
+			historys.push(item.requestOptions.prompt)
+			historys.push(item.text)
+		});
+		console.log(historys)
+	}
+
 	let options: Chat.ConversationRequest = {}
 
 	if (requestOptions.options)
@@ -250,7 +265,7 @@ async function onRegenerate(index: number) {
 				conversationId: options.conversationId,
 				model: 'gpt-3.5-turbo',
 				modelType: 0,
-				contextCount: !usingContext.value ? 0 : null,
+				historys: historys,
 				signal: ganNewController().signal,
 				onDownloadProgress: ({event}) => {
 					const xhr = event.target
