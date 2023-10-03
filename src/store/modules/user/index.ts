@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user-store', {
   actions: {
     async refreshUserInfo() {
       const { data } = await fetchGetUser<UserInfo>()
+			console.log(data)
       this.userInfo = data
       this.recordState()
     },

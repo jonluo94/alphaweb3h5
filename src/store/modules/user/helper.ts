@@ -1,5 +1,5 @@
 import {ss} from '@/utils/storage'
-
+import defaultAvatar from '@/assets/avatar.jpg'
 const LOCAL_NAME = 'userStorage'
 
 export interface UserInfo {
@@ -22,9 +22,9 @@ export interface UserState {
 export function defaultSetting(): UserState {
 	return {
 		userInfo: {
-			headImageUrl: 'https://avatars.githubusercontent.com/u/43564692?s=96&v=4',
-			userName: 'terramours',
-			description: '最新gpt地址： <a href="https://ai.terramours.site/" class="text-blue-500" target="_blank" >ai.terramours.site</a>',
+			headImageUrl: defaultAvatar,
+			userName: 'Tester',
+			description: '',
 		},
 	}
 }

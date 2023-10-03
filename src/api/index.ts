@@ -21,9 +21,10 @@ export function fetchChatConfig<T = any>() {
 }
 
 export function fetchGetUser<T = any>() {
-	return get<T>({
-		url: '/api/v1/User/GetUser',
-	})
+	return {code: 200, data: {userId: "userId", userName: "userName"}}
+	// return get<T>({
+	// 	url: '/api/v1/User/GetUser',
+	// })
 }
 
 export function fetchUpdateUser(userId: number, userName: string, headImageUrl: string | undefined) {
@@ -81,7 +82,6 @@ export function fetchChatAPIProcess<T = any>(
 
 
 	return post<T>({
-		// url: '/api/v1/Chat/ChatCompletionStream',
 		url: '/api/v1/chat/completions',
 		data,
 		signal: params.signal,

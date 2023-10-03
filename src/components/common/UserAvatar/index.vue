@@ -27,11 +27,11 @@ const userInfo = computed(() => userStore.userInfo)
     </div>
     <div class="flex-1 min-w-0 ml-2">
       <h2 class="overflow-hidden font-bold text-md text-ellipsis whitespace-nowrap">
-        {{ userInfo.userName ?? 'TerraMours' }}
+        {{ userInfo.userName ?? 'Tester' }}
       </h2>
-      <p class="overflow-hidden text-xs text-gray-500 text-ellipsis whitespace-nowrap">
-        余额：￥{{userInfo.balance}}
-      </p>
+<!--      <p class="overflow-hidden text-xs text-gray-500 text-ellipsis whitespace-nowrap">-->
+<!--        余额：￥{{userInfo.balance}}-->
+<!--      </p>-->
     </div>
   </div>
 </template>

@@ -1,11 +1,11 @@
 {
-  "name": "TerraMours_Gpt_Web",
+  "name": "aigpt",
   "version": "1.0.0",
   "private": false,
-  "description": "TerraMours_Gpt_Web",
-  "author": "TerraMours <terramours@163.com>",
+  "description": "aigpt",
+  "author": "aigpt",
   "keywords": [
-    "TerraMours_Gpt_Web",
+    "aigpt",
     "chatgpt",
     "chatbot",
     "vue"

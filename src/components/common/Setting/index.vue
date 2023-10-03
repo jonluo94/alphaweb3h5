@@ -4,7 +4,6 @@ import { NModal, NTabPane, NTabs } from 'naive-ui'
 import General from './General.vue'
 import Advanced from './Advanced.vue'
 // import About from './About.vue'
-import UserInfo from './UserInfo.vue'
 import { useAuthStore } from '@/store'
 import { SvgIcon } from '@/components/common'
 
@@ -24,7 +23,7 @@ const authStore = useAuthStore()
 
 const isChatGPTAPI = computed<boolean>(() => !!authStore.isChatGPTAPI)
 
-const active = ref('UserInfo')
+const active = ref('General')
 
 const show = computed({
   get() {
@@ -40,13 +39,7 @@ const show = computed({
   <NModal v-model:show="show" :auto-focus="false" preset="card" style="width: 95%; max-width: 640px">
     <div>
       <NTabs v-model:value="active" type="line" animated>
-        <NTabPane name="UserInfo" tab="UserInfo">
-          <template #tab>
-            <SvgIcon class="text-lg" icon="ri:file-user-line" />
-            <span class="ml-2">{{ $t('setting.userInfo') }}</span>
-          </template>
-          <UserInfo />
-        </NTabPane>
+
         <NTabPane name="General" tab="General">
           <template #tab>
             <SvgIcon class="text-lg" icon="ri:list-settings-line" />
