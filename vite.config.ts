@@ -33,11 +33,12 @@ export default defineConfig((env) => {
     plugins: setupPlugins(viteEnv),
     server: {
       host: '0.0.0.0',
-      port: 3001,
+      port: 3002,
       open: false,
       proxy: {
         '/api': {
-          target: "http://localhost:7861",
+          // target: "http://localhost:7861",
+          target: "http://47.88.16.20:17861",
           changeOrigin: true, // 允许跨域
           rewrite: path => path.replace('/api/', '/'),
         },
