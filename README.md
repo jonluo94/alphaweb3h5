@@ -37,13 +37,12 @@ pnpm dev
 #### Docker 构建
 
 ```bash
-docker build -t terramoursgptweb .
+docker build -t alphaweb3h5 .
 
 # 前台运行
-docker run --name TerraMours_Gpt_Web -d -p 3002:4173 --restart always TerraMours_Gpt_Web
+docker run --name alphaweb3h5 -d -p 13002:3002 --restart always alphaweb3h5
 
-# 保存镜像
-docker save -o chatweb.tar TerraMours_Gpt_Web
+
 # 运行地址
 http://localhost:3002/
 ```
