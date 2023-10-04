@@ -14,11 +14,11 @@
 											</RouterView>
 										</div>
 									</NTabPane>
-									<NTabPane name="AI绘图" tab="AI绘图">
-										<div class="scrollable">
-											<ImageView/>
-										</div>
-									</NTabPane>
+<!--									<NTabPane name="AI绘图" tab="AI绘图">-->
+<!--										<div class="scrollable">-->
+<!--											<ImageView/>-->
+<!--										</div>-->
+<!--									</NTabPane>-->
 								</NTabs>
 							</NLayoutContent>
 							<!-- <Helped/> -->
