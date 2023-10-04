@@ -88,7 +88,7 @@ async function onConversation() {
 			historys.push(item.requestOptions.prompt)
 			historys.push(item.text)
 		});
-		console.log(historys);
+		// console.log(historys);
 	}
 
 	let options: Chat.ConversationRequest = lastOptions
@@ -214,7 +214,8 @@ async function onConversation() {
 		scrollToBottomIfAtBottom()
 	} finally {
 		loading.value = false
-		userStore.refreshUserInfo()
+		// console.log("refreshUserInfo")
+		// userStore.refreshUserInfo(=
 	}
 }
 

@@ -22,10 +22,10 @@ export function fetchChatConfig<T = any>() {
 
 export function fetchGetUser<T = any>() {
 	//todo: getuser
-	return {code: 200, data: {userId: "userId", userName: "userName"}}
-	// return get<T>({
-	// 	url: '/api/v1/User/GetUser',
-	// })
+	// return {code: 200, data: {userId: "userId", userName: "userName"}}
+	return get<T>({
+		url: '/api/v1/User/GetUser',
+	})
 }
 
 export function fetchUpdateUser(userId: number, userName: string, headImageUrl: string | undefined) {
@@ -76,10 +76,10 @@ export function fetchChatAPIProcess<T = any>(
 	for (var i = 0; i < params.historys.length / 2; i++) {
 		messages.push({
 			role: 'user',
-			content: params.historys[i*2]
+			content: params.historys[i * 2]
 		}, {
 			role: 'assistant',
-			content: params.historys[i*2 + 1]
+			content: params.historys[i * 2 + 1]
 		})
 	}
 
@@ -128,7 +128,7 @@ export function fetchEmailCode(userEmail: string) {
 
 export function fetchRegister(userAccount: string, userPassword: string, repeatPassword: string, checkCode: string) {
 	return post<string>({
-		url: '/api/v1/Login/Register',
+		url: '/api/v1/login/register',
 		data: {userAccount, userPassword, repeatPassword, checkCode},
 	})
 }
@@ -140,9 +140,11 @@ export function generateImage<T>(Prompt: string, modelType: number, connectionId
 	})
 }
 
-export function login(data: { userAccount: string; userPassword: string }) {
-	//todo:公众号名单
-	return {code: 200, data: {token: "*****"}}
+export function login<T>(data: { userAccount: string; userPassword: string }) {
+	return post<T>({
+		url: '/api/v1/login',
+		data: {"user_name": data.userAccount, "user_secret": data.userPassword},
+	})
 }
 
 interface PagedRes<T> {

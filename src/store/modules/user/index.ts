@@ -13,6 +13,7 @@ export const useUserStore = defineStore('user-store', {
       this.recordState()
     },
     updateUserInfo(userInfo: Partial<UserInfo>) {
+    	console.log(userInfo)
       this.userInfo = { ...this.userInfo, ...userInfo }
       this.recordState()
     },

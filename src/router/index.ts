@@ -31,11 +31,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/exception/500/index.vue'),
   },
   {
-    path: '/balance',
-    name: 'balance',
-    component: () => import('@/views/other/balance/index.vue'),
-  },
-  {
     path: '/image',
     name: 'image',
     component: () => import('@/views/chat/layout/image/index.vue'),

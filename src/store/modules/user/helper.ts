@@ -1,5 +1,5 @@
 import {ss} from '@/utils/storage'
-import defaultAvatar from '@/assets/avatar.jpg'
+import defaultAvatar from '@/assets/avatar.png'
 const LOCAL_NAME = 'userStorage'
 
 export interface UserInfo {

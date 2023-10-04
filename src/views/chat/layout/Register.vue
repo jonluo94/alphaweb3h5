@@ -1,7 +1,7 @@
 <template>
 	<div class="h-full relative bg-center bg-cover bg-no-repeat" :style="{backgroundImage:`url(${backgroundImageURL})`}">
 		<div class="absolute w-1/4 p-4 right-40 bottom-1/2 translate-y-1/2">
-				<h2 class="text-white text-center pb-4 text-2xl font-mono font-bold">TERRA MOURS</h2>
+				<h2 class="text-white text-center pb-4 text-2xl font-mono font-bold">阿尔法AI助手</h2>
 				<NForm ref="formRef" :model="model" :rules="rules" size="medium" label-placement="left">
 					<NFormItem path="email">
 						<NInput placeholder="电子邮箱" v-model:value="model.email">

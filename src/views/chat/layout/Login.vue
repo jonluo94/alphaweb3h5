@@ -42,7 +42,7 @@ const formRules = {
 }
 
 const formData = reactive<LoginDTO>({
-	userAccount: localState.userAccount ?? 'terramours@163.com',
+	userAccount: localState.userAccount ?? '',
 	userPassword: localState.userPassword ?? '',
 })
 
@@ -62,14 +62,19 @@ const loginHandle = () => {
 		const loginRes = await login(formData)
 		loading.value = false
 		if (loginRes.code === 200) {
+			if (loginRes.msg === "secreterror") {
+				message.error('登录出错,请联系管理员')
+				return
+			}
 			// 记住密码
+			formData.userName =  formData.userAccount
 			userStore.updateUserInfo(Object.assign({}, formData, saveMe.value ? {} : {userPassword: ''}))
 			store.setToken(loginRes.data.token)
 			message.success('登录成功！')
 			await router.push('/chat')
 			return
 		}
-		message.warning('登录出错,请联系管理员')
+
 	})
 }
 </script>
@@ -85,7 +90,7 @@ const loginHandle = () => {
 				<div class="translate-y-2/3">
 					<NSpin :show="loading">
 						<h2 class="text-white text-center pb-4 text-2xl font-mono font-bold">
-							TERRA MOURS
+							阿尔法AI助手
 						</h2>
 						<NForm ref="formRef" size="medium" label-placement="left" :model="formData" :rules="formRules">
 							<NFormItem path="userAccount">
@@ -111,11 +116,6 @@ const loginHandle = () => {
 										<NCheckbox :checked="saveMe" @update:checked="saveMe = !saveMe">
 											<span class="text-slate-300">记住我</span>
 										</NCheckbox>
-										<NButton :text="true">
-                      <span class="text-slate-300">
-                        忘记密码？
-                      </span>
-										</NButton>
 									</NSpace>
 								</div>
 								<NButton
@@ -127,17 +127,9 @@ const loginHandle = () => {
 									确定
 								</NButton>
 								<div class="flex-y-center justify-between">
-									<!-- 手机验收码登录 -->
-									<!-- <NButton class="flex-1" :block="true" @click="toLoginModule('code-login')">
-										{{ loginModuleLabels['code-login'] }}
-									</NButton> -->
-
-									<div class="w-12px"/>
-									<NButton class="flex-1" :block="true" @click="toRegister">
-                    <span class="text-slate-300">
-                      注册
-                    </span>
-									</NButton>
+									<a href="http://www.baidu.com">
+										<span class="text-slate-300">帮助手册</span>
+									</a>
 								</div>
 							</NSpace>
 							<!-- 其他账户登录 -->
