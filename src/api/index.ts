@@ -21,8 +21,6 @@ export function fetchChatConfig<T = any>() {
 }
 
 export function fetchGetUser<T = any>() {
-	//todo: getuser
-	// return {code: 200, data: {userId: "userId", userName: "userName"}}
 	return get<T>({
 		url: '/api/v1/User/GetUser',
 	})
