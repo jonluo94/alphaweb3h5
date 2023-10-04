@@ -40,7 +40,7 @@ pnpm dev
 docker build -t alphaweb3h5 .
 
 # 前台运行
-docker run --name alphaweb3h5 -d -p 17880:80 -v /home/jonluo/vuepath/alphaweb3h5/nginx/conf.d:/etc/nginx/conf.d  alphaweb3h5
+docker run --name alphaweb3h5 -d -p 17880:80 -v /root/alphaweb3h5/nginx/conf.d:/etc/nginx/conf.d  alphaweb3h5
 
 
 # 运行地址
