@@ -22,7 +22,7 @@ export function fetchChatConfig<T = any>() {
 
 export function fetchGetUser<T = any>() {
 	return get<T>({
-		url: '/api/v1/User/GetUser',
+		url: '/api/v1/balance',
 	})
 }
 

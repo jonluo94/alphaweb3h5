@@ -68,6 +68,7 @@ const loginHandle = () => {
 			}
 			// 记住密码
 			formData.userName =  formData.userAccount
+			formData.balance =  loginRes.data.balance
 			userStore.updateUserInfo(Object.assign({}, formData, saveMe.value ? {} : {userPassword: ''}))
 			store.setToken(loginRes.data.token)
 			message.success('登录成功！')

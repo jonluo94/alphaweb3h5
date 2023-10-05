@@ -29,9 +29,9 @@ const userInfo = computed(() => userStore.userInfo)
       <h2 class="overflow-hidden font-bold text-md text-ellipsis whitespace-nowrap">
         {{ userInfo.userName ?? 'Tester' }}
       </h2>
-<!--      <p class="overflow-hidden text-xs text-gray-500 text-ellipsis whitespace-nowrap">-->
-<!--        余额：￥{{userInfo.balance}}-->
-<!--      </p>-->
+      <p class="overflow-hidden text-xs text-gray-500 text-ellipsis whitespace-nowrap">
+        次数：{{userInfo.balance}}
+      </p>
     </div>
   </div>
 </template>

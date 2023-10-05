@@ -214,8 +214,7 @@ async function onConversation() {
 		scrollToBottomIfAtBottom()
 	} finally {
 		loading.value = false
-		// console.log("refreshUserInfo")
-		// userStore.refreshUserInfo(=
+		userStore.refreshUserInfo()
 	}
 }
 
@@ -336,6 +335,7 @@ async function onRegenerate(index: number) {
 		)
 	} finally {
 		loading.value = false
+		userStore.refreshUserInfo()
 	}
 }
 
