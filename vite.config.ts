@@ -37,8 +37,8 @@ export default defineConfig((env) => {
       open: false,
       proxy: {
         '/api': {
-          target: "http://localhost:7861",
-          // target: "http://47.88.16.20:17861",
+          // target: "http://localhost:7861",
+          target: "http://47.88.16.20:17861",
           changeOrigin: true, // 允许跨域
           rewrite: path => path.replace('/api/', '/'),
         },

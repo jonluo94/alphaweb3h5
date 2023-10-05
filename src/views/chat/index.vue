@@ -233,7 +233,7 @@ async function onRegenerate(index: number) {
 			historys.push(item.requestOptions.prompt)
 			historys.push(item.text)
 		});
-		console.log(historys)
+		// console.log(historys)
 	}
 
 	let options: Chat.ConversationRequest = {}
@@ -299,7 +299,7 @@ async function onRegenerate(index: number) {
 							return fetchChatAPIOnce()
 						}
 					} catch (error) {
-						//
+						console.log("fetchChatAPIProcess",error)
 					}
 				},
 			})
