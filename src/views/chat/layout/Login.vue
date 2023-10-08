@@ -66,6 +66,10 @@ const loginHandle = () => {
 				message.error('登录出错,请联系管理员')
 				return
 			}
+			if (loginRes.data.token == undefined) {
+				message.error('账号密码错误')
+				return
+			}
 			// 记住密码
 			formData.userName =  formData.userAccount
 			formData.balance =  loginRes.data.balance
@@ -128,7 +132,7 @@ const loginHandle = () => {
 									确定
 								</NButton>
 								<div class="flex-y-center justify-between">
-									<a href="http://www.baidu.com">
+									<a href="https://mp.weixin.qq.com/s/8vr0irTeGFSpq4HtwAvEpw">
 										<span class="text-slate-300">帮助手册</span>
 									</a>
 								</div>

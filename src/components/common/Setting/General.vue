@@ -3,7 +3,8 @@ import { computed } from 'vue'
 import { NButton, NPopconfirm, NSelect, useMessage } from 'naive-ui'
 import type { Language, Theme } from '@/store/modules/app/helper'
 import { SvgIcon } from '@/components/common'
-import { useAppStore } from '@/store'
+import { useAppStore,useUserStore } from '@/store'
+import { useAuthStoreWithout } from '@/store/modules/auth'
 import { getCurrentDate } from '@/utils/functions'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
@@ -16,6 +17,7 @@ const ms = useMessage()
 
 const theme = computed(() => appStore.theme)
 
+const userStore = useUserStore()
 
 const language = computed({
   get() {
@@ -98,6 +100,15 @@ function handleImportButtonClick(): void {
   if (fileInput)
     fileInput.click()
 }
+
+
+function handleReset() {
+	userStore.resetUserInfo()
+	const authStore = useAuthStoreWithout()
+	authStore.removeToken()
+	window.location.reload()
+}
+
 </script>
 
 <template>
@@ -165,6 +176,10 @@ function handleImportButtonClick(): void {
           />
         </div>
       </div>
+			<NButton type="success" @click="handleReset">
+				{{ $t('setting.logout') }}
+			</NButton>
     </div>
+
   </div>
 </template>
