@@ -203,11 +203,11 @@ export function ShareImageList(queryString: string | null, pageIndex: number, pa
 
 export interface SubmitDTO {
 	negativePrompt: string
-	Prompt: string
+	prompt: string
 	modelType: number
 	connectionId: any
-	Count: number
-	Size: number
+	count: number
+	size: number
 	model: string | null
 }
 

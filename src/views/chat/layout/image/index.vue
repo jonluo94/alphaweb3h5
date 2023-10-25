@@ -11,18 +11,19 @@ import {
 	NInput,
 	NModal,
 	NPagination,
-	NPopover, NPopselect, NRow, NSlider, NStatistic, NSwitch, NTabPane, NTabs, useMessage,
+	NPopover, NPopselect, NRow, NSlider, NStatistic, NSwitch, NTabPane, NTabs, useDialog, useMessage,
 } from 'naive-ui'
-import {onBeforeMount, onMounted, reactive, ref} from 'vue'
+import {computed, onBeforeMount, onMounted, reactive, ref} from 'vue'
 import {useAuthStoreWithout} from '@/store/modules/auth'
 import {useSignalR} from '@/views/chat/hooks/useSignalR'
 import SubmitFooter from '@/components/common/SubmitFooter/submitFooter.vue'
 import {HoverButton, SvgIcon} from '@/components/common'
 import type {SubmitDTO} from '@/api'
 import {GenerateGraph, MyImageList, ShareImage, ShareImageList} from '@/api'
-import {usePictureStore} from "@/store";
+import {usePictureStore, useUserStore} from "@/store";
 import PromptRecommend from "@/assets/recommend.json";
 // 定义后端接口的地址
+import {t} from '@/locales'
 const apiUrl = import.meta.env.VITE_GLOB_API_URL
 const authStore = useAuthStoreWithout()
 const modelTypeOptions: Array<{ label: string; value: number }> = [
@@ -32,11 +33,14 @@ const modelOptions: Array<{ label: string; value: string }> = [
 	{label: '二次元', value: '二次元'},
 	{label: '真人', value: '真人'},
 ]
-
+const userStore = useUserStore()
 const pictureStore = usePictureStore()
 
 const selectedTab = ref('chap1')
 const showModal = ref(false)
+
+const loading = ref<boolean>(false)
+const dialog = useDialog()
 
 const page = ref(1)
 const pageSize = ref(10)
@@ -58,11 +62,20 @@ const formData = reactive<SubmitDTO>({
 
 const submit = async () => {
 	formData.connectionId = connection.value?.connectionId
+	loading.value = true
 	const {picture} = await GenerateGraph(formData)
-	ms.success("绘画成功")
-	let list = pictureStore.pictureList
-	list.push("http://127.0.0.1:7861/static/tmpp7acz6ql.png")
-	pictureStore.updatePictureList(list)
+	if (picture == "data:image/png;base64,") {
+		ms.error("绘画失败")
+		loading.value = false
+	} else {
+		ms.success("绘画成功")
+		let list = pictureStore.pictureList
+		list.push(picture)
+		pictureStore.updatePictureList(list)
+		userStore.refreshUserInfo()
+		loading.value = false
+	}
+
 }
 
 const PublicChange = async (imageRecordId: number, isPublic: boolean) => {
@@ -91,6 +104,24 @@ const updatePage = (p: number) => {
 	page.value = p
 	loadPosts()
 }
+
+// 删除所有记录
+function handleClear() {
+	dialog.warning({
+		title: t('chat.clearChat'),
+		content: t('chat.clearChatConfirm'),
+		positiveText: t('common.yes'),
+		negativeText: t('common.no'),
+		onPositiveClick: () => {
+			pictureStore.updatePictureList([])
+			loadPosts()
+		},
+	})
+}
+
+const buttonDisabled = computed(() => {
+	return loading.value || !formData.prompt || formData.prompt.trim() === ''
+})
 
 const changeBoolean = (imageUrl: any) => {
 	if (imageUrl.islike == null)
@@ -166,7 +197,7 @@ onBeforeMount(() => {
 				placeholder="请输入图片描述词"
 				:search-options="[]"
 				:render-option="null"
-				:button-disabled="false"
+				:button-disabled="buttonDisabled"
 				:show-token="false"
 				:counter="500"
 				@submit="submit"
@@ -177,6 +208,11 @@ onBeforeMount(() => {
 				>
 					<NButton>{{ modelTypeOptions.find(i => i.value === formData.modelType)?.label || '请选择模型' }}</NButton>
 				</NPopselect>
+				<HoverButton @click="handleClear">
+        <span class="text-xl text-[#4f555e] dark:text-white">
+          <SvgIcon icon="ri:delete-bin-line"/>
+        </span>
+				</HoverButton>
 				<!--        <NPopselect-->
 				<!--          v-model:value="formData.model" :options="modelOptions" trigger="click"-->
 				<!--          :on-update:value="(value) => { formData.model = value;formData.count = 1 }"-->
