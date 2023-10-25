@@ -108,8 +108,8 @@ const updatePage = (p: number) => {
 // 删除所有记录
 function handleClear() {
 	dialog.warning({
-		title: t('chat.clearChat'),
-		content: t('chat.clearChatConfirm'),
+		title: t('chat.clearDraw'),
+		content: t('chat.clearDrawConfirm'),
 		positiveText: t('common.yes'),
 		negativeText: t('common.no'),
 		onPositiveClick: () => {
