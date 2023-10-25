@@ -17,12 +17,13 @@ export function useSignalR(
   const start = async () => {
     if (connection.value && connection.value.state === 'Connected')
       return
-    connection.value = getConnection(hubUrl)
+    // connection.value = getConnection(hubUrl)
     if (connection.value) {
       // 连接 SignalR
+			console.log('SignalR Connected--------------.')
       connection.value.start()
         .then(() => {
-          // console.log('SignalR Connected.')
+          console.log('SignalR Connected.')
           // 调用 GraphGenerationHub 的 GetWaitingCount 方法获取队列等待数
           connection.value?.invoke('GetWaitingCount')
             .then((count) => {

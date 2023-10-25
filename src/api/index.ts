@@ -213,7 +213,7 @@ export interface SubmitDTO {
 
 export function GenerateGraph(submitDTO: SubmitDTO) {
 	return post<string>({
-		url: '/api/v1/Image/GenerateGraph',
+		url: '/api/v1/chat/sdgen',
 		data: submitDTO,
 	})
 }
